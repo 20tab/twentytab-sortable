@@ -10,6 +10,7 @@ setup(name='twentytab-sortable',
       license='MIT License',
       install_requires=[
           'Django >=1.6',
+          'django-appconf>=0.6',
       ],
       packages=find_packages(),
       include_package_data=True,
