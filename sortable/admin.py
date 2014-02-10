@@ -16,7 +16,7 @@ class PositionAdmin(admin.ModelAdmin):
     class Media:
         js = (settings.JQUERY_LIB,
               settings.JQUERYUI_LIB,
-              '/static/sortable/js/admin-list-reorder.js',)
+              u'{}sortable/js/admin-list-reorder.js'.format(settings.STATIC_URL),)
 
     class Meta:
         abstract = True
@@ -27,10 +27,10 @@ class SortableStackedInline(StackedInline):
     extra = 0
 
     class Media:
-        css = {"all": ("/static/sortable/css/inline-reorder.css",)}
+        css = {u"all": (u"{}sortable/css/inline-reorder.css".format(settings.STATIC_URL),)}
         js = (settings.JQUERY_LIB,
               settings.JQUERYUI_LIB,
-              '/static/sortable/js/inline-reorder.js',)
+              u'{}sortable/js/inline-reorder.js'.format(settings.STATIC_URL),)
 
 
 class SortableTabularInline(TabularInline):
@@ -38,7 +38,7 @@ class SortableTabularInline(TabularInline):
     extra = 0
 
     class Media:
-        css = {"all": ("/static/sortable/css/inline-reorder.css",)}
+        css = {u"all": (u"{}sortable/css/inline-reorder.css".format(settings.STATIC_URL),)}
         js = (settings.JQUERY_LIB,
               settings.JQUERYUI_LIB,
-              '/static/sortable/js/inline-reorder.js',)
+              u'{}sortable/js/inline-reorder.js'.format(settings.STATIC_URL),)
