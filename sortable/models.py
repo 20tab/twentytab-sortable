@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from . import conf
 
+
 class PositionModel(models.Model):
     """
     It's an abstract model to create sortable items in list_display or in inline admin
