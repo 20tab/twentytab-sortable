@@ -7,6 +7,15 @@ A django model and admin to create sortable items in django admin with jqueryui 
 
 Use the following command: <b><i>pip install twentytab-sortable</i></b>
 
+## Configuration
+
+- Static files
+
+Run collectstatic command or map static directory. If you use uWSGI you can map static files:
+
+```ini
+static-map = /static/sortable/=%(path_to_site_packages)/sortable/static/sortable
+```
 
 ## Usage
 - models.py
