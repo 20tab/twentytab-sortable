@@ -9,6 +9,18 @@ Use the following command: <b><i>pip install twentytab-sortable</i></b>
 
 ## Configuration
 
+- Settings.py
+
+Open settings.py and add sortable to your INSTALLED_APPS:
+
+```py
+INSTALLED_APPS = [
+    ...
+    'sortable',
+    ...
+]
+```
+
 - Static files
 
 Run collectstatic command or map static directory. If you use uWSGI you can map static files:
