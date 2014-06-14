@@ -11,11 +11,7 @@ Use the following command: <b><i>pip install twentytab-sortable</i></b>
 
 - Static files
 
-Run collectstatic command or map static directory. If you use uWSGI you can map static files:
-
-```ini
-static-map = /static/sortable/=%(path_to_site_packages)/sortable/static/sortable
-```
+Run collectstatic command or map static directory.
 
 ## Usage
 - models.py
