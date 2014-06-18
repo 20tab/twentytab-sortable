@@ -46,12 +46,21 @@ class MyPositionModel(PositionModel):
 ```py
 from django.contrib import admin
 from myapp.models import MyPositionModel
-from sortable.admin import PositionAdmin
+from sortable.admin import PositionAdmin, SortableTabularInline, SortableStackedInline
 
-class MyPositionAdmin(PositionAdmin)
-    pass
+class MyTabularInline(SortableTabularInline):
+    # add 'position' in your fields
+    model = APositionModel
 
-admin.site.register(MyPositionModel, MyPositionAdmin
+class MyStackedInline(SortableStackedInline):
+    # add 'position' in your fields
+    model = APositionModel
+
+class MyPositionAdmin(PositionAdmin):
+    inlines = [MyTabularInline, MyStackedInline]
+    # add 'position' in your list_editable fields
+
+admin.site.register(MyPositionModel, MyPositionAdmin)
 
 
 ```
