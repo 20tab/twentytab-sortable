@@ -26,28 +26,29 @@ jQuery(function(){
 	var temp_html_bottom = "";
 	
 	for(i in orderables){
+        /* ** TabularInline ** */
 		if($(orderables[i]).hasClass('tabular')){
 			$(orderables[i]).find('tbody').sortable({
 				cancel:".add-row",
 				axis: 'y',
 				delay: '150',
-				start: function(event,ui){
-					temp_html_bottom = $(this).find('.add-row');
-					$(this).find('.add-row').remove();
-				},
+				/*start: function(event,ui){
+					//temp_html_bottom = $(this).find('.add-row');
+					// $(this).find('.add-row').remove();
+				},*/
 				stop: function(event,ui){
-					$(this).append(temp_html_bottom);
+					//$(this).append(temp_html_bottom);
 					$(orderables[i]).find("input,textarea,select")
      					.bind('mousedown.ui-disableSelection selectstart.ui-disableSelection', function(e) {
       					e.stopImmediatePropagation();
     				});
 				},
 				update: function(event, ui) {
-		            item = ui.item
+		            item = ui.item;
 		            items = $(this).find('tr').get()
 		            $(items).each(function(index) {
 		            	input = $(this).find('.field-position').children('input');
-                		input.attr('value', index);
+                		input.attr('value', index+1);
 		            });
 		            $(this).find('tr').removeClass('row1').removeClass('row2');
 		            $(this).find('tr:even').addClass('row1');
@@ -58,30 +59,32 @@ jQuery(function(){
 			
 		}
 		else{
+        /* ** StackedInline ** */
 			$(orderables[i]).sortable({
 				cancel:".add-row,h2",
 				axis: 'y',
 				delay: '150',
 				items: '.inline-related',
-				start: function(event,ui){
-					temp_html_top = $(this).find('h2');
-					temp_html_bottom = $(this).find('.add-row');
-					$(this).find('.add-row,h2').remove();
+				/*start: function(event,ui){
+					temp_html_top = $(this).children('h2');
+					temp_html_bottom = $(this).children('.add-row');
+					//$(this).find('.add-row,h2').remove();
 				},
+                */
 				stop: function(event,ui){
-					$(this).prepend(temp_html_top);
-					$(this).append(temp_html_bottom);
+					// $(this).prepend(temp_html_top);
+					// $(this).append(temp_html_bottom);
 					$(orderables[i]).find("input,textarea,select")
      					.bind('mousedown.ui-disableSelection selectstart.ui-disableSelection', function(e) {
       					e.stopImmediatePropagation();
     				});
 				},
 				update: function(event, ui) {
-		            item = ui.item
+		            item = ui.item;
 		            items = $(this).find('.inline-related').get()
 		            $(items).each(function(index) {
 		            	input = $(this).find('.field-position').find('input');
-                		input.attr('value', index);
+                		input.attr('value', index+1);
 		            });
 		            $(this).find('tr').removeClass('row1').removeClass('row2');
 		            $(this).find('tr:even').addClass('row1');
