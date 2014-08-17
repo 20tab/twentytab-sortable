@@ -47,7 +47,7 @@ jQuery(function(){
 		            item = ui.item;
 		            items = $(this).find('tr').get()
 		            $(items).each(function(index) {
-		            	input = $(this).find('.field-position').children('input');
+		            	input = $(this).find('.field-position>input');
                 		input.attr('value', index+1);
 		            });
 		            $(this).find('tr').removeClass('row1').removeClass('row2');
@@ -83,7 +83,7 @@ jQuery(function(){
 		            item = ui.item;
 		            items = $(this).find('.inline-related').get()
 		            $(items).each(function(index) {
-		            	input = $(this).find('.field-position').find('input');
+		            	input = $(this).find('.field-position>input');
                 		input.attr('value', index+1);
 		            });
 		            $(this).find('tr').removeClass('row1').removeClass('row2');
@@ -104,10 +104,11 @@ jQuery(function(){
 	}
 	
 	$('.add-row a').on('click',function(){
-		$(this).parents('.ui-sortable').find("input,textarea,select")
+        $(this).parents('.ui-sortable').find("input,textarea,select")
 			.bind('mousedown.ui-disableSelection selectstart.ui-disableSelection', function(e) {
       		e.stopImmediatePropagation();
-    	});	
+    	});
+
 	});
 
 });

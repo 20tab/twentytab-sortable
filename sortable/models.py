@@ -18,7 +18,12 @@ class PositionModel(models.Model):
         if max_number_instance:
             return max_number_instance + 1
         else:
-            return 0
+            return 1
+
+    def save(self, *args, **kwargs):
+        if self.position == 0:
+            self.position = self.max_pos
+        super(PositionModel, self).save(*args, **kwargs)
 
     class Meta:
         abstract = True

@@ -2,7 +2,7 @@
 	cursor:move;
 }
 
-.field-position input{
+.field-position>input{
     border:0;
     background: transparent;
 }
