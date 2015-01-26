@@ -83,7 +83,8 @@ jQuery(function(){
 		            item = ui.item;
 		            items = $(this).find('.inline-related').get()
 		            $(items).each(function(index) {
-		            	input = $(this).find('.field-position>input');
+		            	// input = $(this).find('.field-position>input');
+						input = $(this).find('.field-position').find("input");
                 		input.attr('value', index+1);
 		            });
 		            $(this).find('tr').removeClass('row1').removeClass('row2');
