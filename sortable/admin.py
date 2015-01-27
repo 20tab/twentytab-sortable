@@ -25,6 +25,7 @@ class PositionAdmin(admin.ModelAdmin):
 class SortableStackedInline(StackedInline):
     """Adds necessary media files to regular Django StackedInline"""
     extra = 0
+    ordering = ('position',)
 
     class Media:
         css = {u"all": (u"{}sortable/css/inline-reorder.css".format(settings.STATIC_URL),)}
@@ -36,6 +37,7 @@ class SortableStackedInline(StackedInline):
 class SortableTabularInline(TabularInline):
     """Adds necessary media files to regular Django TabularInline"""
     extra = 0
+    ordering = ('position',)
 
     class Media:
         css = {u"all": (u"{}sortable/css/inline-reorder.css".format(settings.STATIC_URL),)}
