@@ -7,7 +7,7 @@ jQuery(function($) {
     
     cols = $('#result_list tbody tr:first').children()
     
-    for (i = 0; i < cols.length; i++) {
+    for (i = 1; i <= cols.length; i++) {
         inputs = $(cols[i]).find('input[name*=' + pos_field + ']')
         
         if (inputs.length > 0) {
