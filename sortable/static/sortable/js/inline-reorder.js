@@ -1,114 +1,118 @@
 jQuery(function(){
-	
-	var orderables = []
-	var count = 0;
-	
-	
-	$('.inline-related').each(function(){
-		if($(this).hasClass('tabular')){
-			if($(this).find('.field-position').length > 0){
-				$(this).attr('id','inline-related-'+count);
-			}
-			orderables.push('#inline-related-'+count);
-			$(this).find('.field-position').addClass('inline-sortable-item');
-			count++;
-		}
-	});
-	
-	$('.inline-group').each(function(){
-		if($(this).find('.inline-related fieldset.module .field-position').length > 0){
-			orderables.push("#"+$(this).attr('id'));
-		}
-		$(this).find('.inline-related').addClass('inline-sortable-item');
-	});
-	
-	var temp_html_top = "";
-	var temp_html_bottom = "";
-	
-	for(i in orderables){
-        /* ** TabularInline ** */
-		if($(orderables[i]).hasClass('tabular')){
-			$(orderables[i]).find('tbody').sortable({
-				cancel:".add-row",
-				axis: 'y',
-				delay: '150',
-				/*start: function(event,ui){
-					//temp_html_bottom = $(this).find('.add-row');
-					// $(this).find('.add-row').remove();
-				},*/
-				stop: function(event,ui){
-					//$(this).append(temp_html_bottom);
-					$(orderables[i]).find("input,textarea,select")
-     					.bind('mousedown.ui-disableSelection selectstart.ui-disableSelection', function(e) {
-      					e.stopImmediatePropagation();
-    				});
-				},
-				update: function(event, ui) {
-		            item = ui.item;
-		            items = $(this).find('tr').get()
-		            $(items).each(function(index) {
-		            	input = $(this).find('.field-position>input');
-                		input.attr('value', index+1);
-		            });
-		            $(this).find('tr').removeClass('row1').removeClass('row2');
-		            $(this).find('tr:even').addClass('row1');
-		            $(this).find('tr:odd').addClass('row2');
-				}
-				
-			});
-			
-		}
-		else{
-        /* ** StackedInline ** */
-			$(orderables[i]).sortable({
-				cancel:".add-row,h2",
-				axis: 'y',
-				delay: '150',
-				items: '.inline-related',
-				/*start: function(event,ui){
-					temp_html_top = $(this).children('h2');
-					temp_html_bottom = $(this).children('.add-row');
-					//$(this).find('.add-row,h2').remove();
-				},
-                */
-				stop: function(event,ui){
-					// $(this).prepend(temp_html_top);
-					// $(this).append(temp_html_bottom);
-					$(orderables[i]).find("input,textarea,select")
-     					.bind('mousedown.ui-disableSelection selectstart.ui-disableSelection', function(e) {
-      					e.stopImmediatePropagation();
-    				});
-				},
-				update: function(event, ui) {
-		            item = ui.item;
-		            items = $(this).find('.inline-related').get()
-		            $(items).each(function(index) {
-		            	// input = $(this).find('.field-position>input');
-						input = $(this).find('.field-position').find("input");
-                		input.attr('value', index+1);
-		            });
-		            $(this).find('tr').removeClass('row1').removeClass('row2');
-		            $(this).find('tr:even').addClass('row1');
-		            $(this).find('tr:odd').addClass('row2');
-				}
-				
-			});
-		}
 
 
-		$(orderables[i]).find("input,textarea,select")
-			.bind('mousedown.ui-disableSelection selectstart.ui-disableSelection', function(e) {
-      		e.stopImmediatePropagation();
-    	});
+    //EVERY INLINE-GROUP NEEDS A SPECIFIC CLASS
+	$('.inline-group').each(function(index){
+        if($(this).find('.tabular').length > 0 && $(this).find('.field-position').length > 0){
+            $(this).addClass('sortable-tabular-inline');
+        }
+        else if($(this).find('.inline-related fieldset.module .field-position').length > 0){
+            $(this).addClass('sortable-stacked-inline');
+            $(this).find('.inline-related').addClass('inline-sortable-item');
+		}
+    });
 
-		
-	}
-	
-	$('.add-row a').on('click',function(){
-        $(this).parents('.ui-sortable').find("input,textarea,select")
-			.bind('mousedown.ui-disableSelection selectstart.ui-disableSelection', function(e) {
-      		e.stopImmediatePropagation();
-    	});
+    var temp_html_bottom = "";
+    //EVERY TABULAR INLINE NEEDS TO BE SORTABLE
+    $('.sortable-tabular-inline').each(function(index){
+
+        $(this).find('tbody').sortable({
+            cancel:".add-row",
+            axis: 'y',
+            delay: '150',
+            start: function(event,ui){
+                temp_html_bottom = $(this).find('.add-row');
+                $(this).find('.add-row').remove();
+            },
+            stop: function(event,ui){
+                $(this).append(temp_html_bottom);
+                $(this).find("input,textarea,select")
+                    .bind('mousedown.ui-disableSelection selectstart.ui-disableSelection', function(e) {
+                    e.stopImmediatePropagation();
+                });
+            },
+            update: function(event, ui) {
+                var item = ui.item;
+                var items = $(this).find('tr').get();
+                $(items).each(function(index) {
+                    var input = $(this).find('.field-position>input');
+
+                    input.attr('value', index+1);
+                });
+                $(this).find('tr').removeClass('row1').removeClass('row2');
+                $(this).find('tr:even').addClass('row1');
+                $(this).find('tr:odd').addClass('row2');
+            }
+
+        });
+
+       $(this).find('tbody').bind('sortupdate', reorder);
+
+    });
+
+
+    //EVERY STACKED INLINE NEEDS TO BE SORTABLE
+    $('.sortable-stacked-inline').each(function(index){
+        $(this).sortable({
+            cancel:".add-row,h2",
+            axis: 'y',
+            delay: '150',
+            items: '.inline-related',
+            stop: function(event,ui){
+                $(this).find("input,textarea,select")
+                    .bind('mousedown.ui-disableSelection selectstart.ui-disableSelection', function(e) {
+                        e.stopImmediatePropagation();
+                    });
+            },
+            update: function(event, ui) {
+                var item = ui.item;
+                var items = $(this).find('.inline-related').get();
+                $(items).each(function(index) {
+                    // input = $(this).find('.field-position>input');
+                    var input = $(this).find('.field-position').find("input");
+                    input.attr('value', index+1);
+                });
+                $(this).find('tr').removeClass('row1').removeClass('row2');
+                $(this).find('tr:even').addClass('row1');
+                $(this).find('tr:odd').addClass('row2');
+            }
+
+        });
+        $(this).bind('sortupdate', reorder);
+    });
+
+
+    function reorder(){
+
+        if($(this).parents('.inline-group').hasClass('sortable-tabular-inline')){
+            $(this).find('.form-row').not('.empty-form').each(function(index){
+                $(this).find('.field-position>input').val(index+1);
+            });
+        }
+        else if($(this).hasClass('sortable-stacked-inline')){
+            $(this).find('.inline-sortable-item').not('.empty-form').each(function(index){
+                $(this).find('.field-position>input').val(index+1);
+            });
+        }
+    }
+
+
+    $('.add-row a').on('click',function(){
+        var parent = $(this).parents('.inline-group');
+        if(parent.hasClass('sortable-tabular-inline')){
+            parent.find('.ui-sortable').find("input,textarea,select")
+                .bind('mousedown.ui-disableSelection selectstart.ui-disableSelection', function(e) {
+                    e.stopImmediatePropagation();
+            });
+            parent.find('.ui-sortable').trigger('sortupdate');
+        }
+        else if(parent.hasClass('sortable-stacked-inline')){
+            parent.find("input,textarea,select")
+                .bind('mousedown.ui-disableSelection selectstart.ui-disableSelection', function(e) {
+                    e.stopImmediatePropagation();
+            });
+            parent.trigger('sortupdate');
+        }
 
 	});
 
