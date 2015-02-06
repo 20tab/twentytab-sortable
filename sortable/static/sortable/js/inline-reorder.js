@@ -47,7 +47,9 @@ jQuery(function(){
         });
 
        $(this).find('tbody').bind('sortupdate', reorder);
-
+        $(this).find("input,textarea,select")
+			.bind('mousedown.ui-disableSelection selectstart.ui-disableSelection', function(e) {
+      		e.stopImmediatePropagation();
     });
 
 
@@ -79,6 +81,9 @@ jQuery(function(){
 
         });
         $(this).bind('sortupdate', reorder);
+        $(this).find("input,textarea,select")
+			.bind('mousedown.ui-disableSelection selectstart.ui-disableSelection', function(e) {
+      		e.stopImmediatePropagation();
     });
 
 
