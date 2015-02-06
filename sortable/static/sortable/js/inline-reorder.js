@@ -15,7 +15,7 @@ jQuery(function(){
     var temp_html_bottom = "";
     //EVERY TABULAR INLINE NEEDS TO BE SORTABLE
     $('.sortable-tabular-inline').each(function(index){
-
+        $(this).find('tbody tr').addClass('inline-sortable-item');
         $(this).find('tbody').sortable({
             cancel:".add-row",
             axis: 'y',
@@ -47,14 +47,16 @@ jQuery(function(){
         });
 
        $(this).find('tbody').bind('sortupdate', reorder);
-        $(this).find("input,textarea,select")
+       $(this).find("input,textarea,select")
 			.bind('mousedown.ui-disableSelection selectstart.ui-disableSelection', function(e) {
       		e.stopImmediatePropagation();
+       });
     });
 
 
     //EVERY STACKED INLINE NEEDS TO BE SORTABLE
     $('.sortable-stacked-inline').each(function(index){
+        $(this).find('tr').addClass('inline-sortable-item');
         $(this).sortable({
             cancel:".add-row,h2",
             axis: 'y',
@@ -84,6 +86,7 @@ jQuery(function(){
         $(this).find("input,textarea,select")
 			.bind('mousedown.ui-disableSelection selectstart.ui-disableSelection', function(e) {
       		e.stopImmediatePropagation();
+        });
     });
 
 
